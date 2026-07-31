@@ -53,7 +53,7 @@ A Service gives your pods a stable virtual IP and DNS name.
 > Labels are how Kubernetes connects resources together.
 
 
-![alt text](image.png)
+![alt text](k8s_arch.png)
 
 
 #### Types of Services

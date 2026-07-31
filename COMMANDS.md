@@ -78,6 +78,10 @@ Here’s a clean, practical Kubernetes command sheet covering everything you’v
 
 `kubectl apply -f file.yaml`
 
+### Create pod with a image <image_name>
+
+`kubectl run nginx --image=<image_name>`
+
 ### 4. Inspect Resources
 
 ### Describe pod
