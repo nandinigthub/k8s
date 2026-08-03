@@ -106,7 +106,7 @@ This is a common production choice.
 
 4. ExternalName
 
-Maps a Kubernetes Service name to an external DNS name.
+> Maps a Kubernetes Service name to an external DNS name.
 
 Example:
 
@@ -129,3 +129,89 @@ Pod	Service
 > ConfigMap stores Configuration: API URLs, feature flags, ports
 
 > Secret stores Sensitive data: Passwords, API keys, tokens
+
+
+## Volumes
+
+A Volume is storage attached to a pod.
+The Real Solution: PersistentVolume (PV)
+
+PV and PVC (PersistentVolumeClaim)
+Think of it as house and rental agreement
+
+```bash
+
+ PersistentVolume (PV) :Actual storage available in the cluster
+
+PersistentVolumeClaim (PVC) : Request for storage by an application
+            |
+Pod
+
+```
+
+> A pod never directly uses a PV. It uses a PVC.
+
+
+## Namespaces, Labels & Selectors
+
+### Namespaces
+> Think of a namespace as a virtual cluster inside a cluster.
+> The same resource name can exist in different namespaces.
+
+### Labels
+> Labels are key-value tags attached to resources.
+> Think of labels as searchable metadata.
+
+#### This is one of the most common Kubernetes bugs. Labels dont match or namespace diff
+#### Labels can be same in diff namespace
+
+### Selectors
+> Selectors are how Kubernetes finds resources.
+
+
+#### Important Rule
+```
+
+⚠️ Never change a Deployment’s selector after creation.
+
+```
+
+Kubernetes may lose track of its pods.
+
+## Rolling Updates, Rollbacks & Health Checks
+
+### Rolling Updates
+Kubernetes updates pods gradually.
+#### What Actually Happened?
+Kubernetes created a new ReplicaSet.
+During the rollout, both ReplicaSets temporarily coexist.
+
+See them: ```kubectl get rs```
+
+#### Undo a deployment if rollback fails
+```kubectl rollout undo deployment/web```
+
+
+
+```FeatureLiveness ``` : if the container is running and healthy.
+
+```ProbeReadiness``` : Determines if the container can accept incoming network traffic.
+
+
+#### Interview Questions
+
+Q How does Kubernetes achieve zero downtime?
+
+> Rolling updates + readiness probes + Services routing only to Ready pods.
+
+Q What is maxUnavailable?
+
+> Maximum number of pods that can be unavailable during an update.
+
+Q What is maxSurge?
+
+> Maximum extra pods created temporarily during an update.
+
+Q How do you rollback a deployment?
+
+> kubectl rollout undo deployment/<name>
