@@ -1,1 +1,0 @@
-![alt text](istio_arch.png)
